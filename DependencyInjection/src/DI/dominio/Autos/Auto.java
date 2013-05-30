@@ -5,7 +5,7 @@ public class Auto {
 	int ruedas;
 	String modelo;
 	
-	public Auto(int _ruedas,String _modelo){
+	public Auto(int _ruedas, String _modelo){
 		this.setRuedas(_ruedas);
 		this.setModelo(_modelo);
 	}

@@ -14,29 +14,30 @@ public class asdf {
 	Persona persona;
 	/*ConstructorContainer contenedor = new ConstructorContainer ();
 	contenedor.registrarComponente("autito", Auto.class);
-	contenedor.agregarDependencia("autito", int.class, 4);
-	contenedor.agregarDependencia("autito", String.class, "Fiat 600");
+	contenedor.agregarDependencia("autito", 4);
+	contenedor.agregarDependencia("autito", "Fiat 600");
+	
 	contenedor.registrarComponente("personita", Persona.class);
-	contenedor.agregarDependencia("personita", String.class, "cochy");
-	contenedor.agregarDependencia("personita", int.class, 121);
-	contenedor.agregarDependencia("personita", "autito");
-	*/
+	contenedor.agregarDependencia("personita", "cochy");
+	contenedor.agregarDependencia("personita", 121);
+	contenedor.agregarDependenciaConfigurada("personita", "autito");*/
+	
 	/*PropertyContainer contenedor = new PropertyContainer ();
 	contenedor.registrarComponente("autito", Auto.class);
-	contenedor.agregarDependencia("autito","ruedas", int.class, 4);
-	contenedor.agregarDependencia("autito","modelo", String.class, "Fiat 600");
+	contenedor.agregarDependencia("autito","ruedas", 4);
+	contenedor.agregarDependencia("autito","modelo", "Fiat 600");
 	contenedor.registrarComponente("personita", Persona.class);
-	contenedor.agregarDependencia("personita","nombre", String.class, "cochy");
-	contenedor.agregarDependencia("personita", "edad",int.class, 121);
-	contenedor.agregarDependencia("personita", "auto","autito");*/
+	contenedor.agregarDependencia("personita","nombre", "cochy");
+	contenedor.agregarDependencia("personita", "edad",121);
+	contenedor.agregarDependenciaConfigurada("personita", "auto","autito");*/
 	AccesorContainer contenedor = new AccesorContainer ();
 	contenedor.registrarComponente("autito", Auto.class);
-	contenedor.agregarDependencia("autito","ruedas", int.class, 4);
-	contenedor.agregarDependencia("autito","modelo", String.class, "Fiat 600");
+	contenedor.agregarDependencia("autito","ruedas",  4);
+	contenedor.agregarDependencia("autito","modelo","Fiat 600");
 	contenedor.registrarComponente("personita", Persona.class);
-	contenedor.agregarDependencia("personita","nombre", String.class, "cochy");
-	contenedor.agregarDependencia("personita", "edad",int.class, 121);
-	contenedor.agregarDependencia("personita", "auto","autito");
+	contenedor.agregarDependencia("personita","nombre",  "cochy");
+	contenedor.agregarDependencia("personita", "edad", 121);
+	contenedor.agregarDependenciaConfigurada("personita", "auto","autito");
 	
 	try {
 		

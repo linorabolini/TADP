@@ -2,10 +2,9 @@ package DI.implementacion;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 
-public class InstanciarProperty implements FormaInstanciar {
+public class InstanciarProperty extends FormaInstanciar {
 	
 	HashMap<String,Instanciable> dependencias;
 	

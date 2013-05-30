@@ -6,16 +6,16 @@ public class Persona {
 	String nombre;
 	Auto auto;
 	
-
+	public Persona(int _edad, String _nombre){
+		this.setEdad(_edad);
+		this.setNombre(_nombre);
+	}
+	
+	
 	public Persona( String _nombre, int _edad, Auto _auto ){
 		this.setEdad(_edad);
 		this.setNombre(_nombre);
 		this.setAuto(_auto);
-	}
-	
-	public Persona(int _edad, String _nombre){
-		this.setEdad(_edad);
-		this.setNombre(_nombre);
 	}
 	
 	public Persona(){

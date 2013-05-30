@@ -4,12 +4,13 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-public class InstanciarConstructor implements FormaInstanciar {
+public class InstanciarConstructor extends FormaInstanciar {
 	
 	ArrayList<Instanciable> dependencias;
-	
+		
 	public InstanciarConstructor(){
 		dependencias = new ArrayList<Instanciable>();
+		inicializarClasesPrimitivas();
 	}
 	
 	public Object dameInstancia(Componente componente) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
@@ -35,35 +36,40 @@ public class InstanciarConstructor implements FormaInstanciar {
 		
 	}
 	
-	Constructor<?> seleccionarConstructor(Constructor<?>[] constructores, ArrayList<Instanciable> argumentos){
+	Constructor<?> seleccionarConstructor(Constructor<?>[] constructores, ArrayList<Instanciable> dependencias) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
 		
 		for(Constructor<?> constructor : constructores){
 			Class<?>[] clasesParametros = constructor.getParameterTypes();
 	
-			if (correspondeConstructor(clasesParametros,argumentos))
+			if (correspondeConstructor(clasesParametros,dependencias))
 				return constructor;
 		}
 		return null;
 	}
 	
-	boolean correspondeConstructor(Class<?>[] clasesParametros, ArrayList<Instanciable> argumentos){
+	boolean correspondeConstructor(Class<?>[] clasesParametros, ArrayList<Instanciable> argumentos) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
 		
 		int i=0;
 		
+		if (clasesParametros.length != argumentos.size())
+			return false;
+		
 		for (Class<?> clase : clasesParametros){
 						
-			if (i<argumentos.size())
-			
-			if (argumentos.get(i).getClase().getName() != clase.getName())
-				return false; 
-			
+			if (clase.isPrimitive()){
+				if (!(clasesPrimitivas.get(argumentos.get(i).getClase()).getName() == clase.getName()))
+				//if (!clasesPrimitivas.get(clase.getName()).isInstance(argumentos.get(i)))
+					return false; 
+			}
+			else
+				if (!clase.isInstance(argumentos.get(i).dameInstancia()))
+					return false;
+
 			i++;
 		}
 		
-		if (clasesParametros.length == argumentos.size())
-			return true;
-		else
-			return false;
+		return true;
+		
 	}
 
 }

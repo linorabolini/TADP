@@ -1,11 +1,10 @@
 package DI.implementacion;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-public class InstanciarAccesor implements FormaInstanciar {
+public class InstanciarAccesor extends FormaInstanciar {
 
 	HashMap<String,Instanciable> dependencias;
 	
@@ -18,7 +17,7 @@ public class InstanciarAccesor implements FormaInstanciar {
 		Object nuevoObjeto = componente.getClase().newInstance();		
 		
 		for (String accesor : dependencias.keySet()){
-			Method metodo = componente.getClase().getMethod(accesor,dependencias.get(accesor).getClase());
+			Method metodo = encontrarAccesor (accesor, componente.getClase().getMethods());
 			metodo.invoke(nuevoObjeto, dependencias.get(accesor).dameInstancia());
 		}
 		
@@ -31,5 +30,17 @@ public class InstanciarAccesor implements FormaInstanciar {
 		dependencias.put(id, instanciable);
 
 	}
+	
+	Method encontrarAccesor (String accesor,  Method[] listaMetodos ){
+		
+		for (Method metodo: listaMetodos){
+			if (metodo.getName().compareTo(accesor) == 0)
+				return metodo;
+		}
+		
+		return null;
+	}
+	
+	
 
 }

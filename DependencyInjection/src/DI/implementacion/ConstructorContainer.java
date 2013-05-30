@@ -8,13 +8,13 @@ public class ConstructorContainer extends Container {
 		componentes.put(id, nuevoComponente);
 	}
 	
-	public void agregarDependencia (String id, Class<?> clase, Object dependencia){
+	public void agregarDependencia (String id,  Object dependencia){
 		
 		Componente componente = componentes.get(id);
-		componente.agregarDependencia("",new Valor(dependencia,clase));
+		componente.agregarDependencia("",new Valor(dependencia,dependencia.getClass()));
 	}
 	
-	public void agregarDependencia (String id, String dependencia){
+	public void agregarDependenciaConfigurada (String id, String dependencia){
 		
 		Componente componente = componentes.get(id);
 		if (componentes.containsKey(dependencia)){
