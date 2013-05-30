@@ -2,26 +2,26 @@ package DI.implementacion;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
 
 public class Lista implements Instanciable{
 	
 	Class<?> clase;
-	HashMap<String,Instanciable> valores;
+	 ArrayList<Instanciable> valores;
 	
-	public Lista (Class<?> _clase){
+	public Lista (Class<?> _clase, ArrayList<Instanciable> _valores){
 		this.clase = _clase;
-		valores = new HashMap<String,Instanciable>();
+		valores = _valores;
 	}
 	
-	public Object dameInstancia() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public Object dameInstancia() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException {
 		
-		ArrayList<Object> lista = new ArrayList<Object>();
-		for (Instanciable valor: valores.values()){
+		Collection lista = (Collection) clase.newInstance();
+		for (Instanciable valor: valores){
 			lista.add(valor.dameInstancia());
 		}
 		return lista;
-	}
+}
 	
 	public Class<?> getClase() {
 		return clase;
