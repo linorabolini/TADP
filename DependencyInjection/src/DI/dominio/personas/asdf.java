@@ -1,10 +1,12 @@
-package DI.dominio.Autos;
+package DI.dominio.personas;
 
 import DI.implementacion.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import junit.framework.Assert;
 
 public class asdf {
 	
@@ -58,7 +60,7 @@ public class asdf {
 	contenedor.agregarDependenciaLista("personita", "saldosTarjeta", ArrayList.class, 4,5,6,7,8);
 	contenedor.agregarDependenciaListaConfigurada("personita", "hijos", ArrayList.class, "hijo1", "hijo2", "hijo3");*/
 	
-	AccesorContainer contenedor = new AccesorContainer ();
+	/*AccesorContainer contenedor = new AccesorContainer ();
 	contenedor.registrarComponente("autito", Auto.class);
 	contenedor.agregarDependencia("autito","ruedas",  4);
 	contenedor.agregarDependencia("autito","modelo","Fiat 600");
@@ -79,7 +81,7 @@ public class asdf {
 	contenedor.agregarDependencia("hijo3","edad", 15);
 	contenedor.agregarDependencia("hijo3","nombre", "mina");
 	
-	contenedor.agregarDependenciaListaConfigurada("personita", "hijos", ArrayList.class, "hijo1", "hijo2", "hijo3");
+	contenedor.agregarDependenciaListaConfigurada("personita", "hijos", ArrayList.class, "hijo1", "hijo2", "hijo3");*/
 	
 	try {
 		

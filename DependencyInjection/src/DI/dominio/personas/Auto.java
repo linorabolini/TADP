@@ -1,4 +1,4 @@
-package DI.dominio.Autos;
+package DI.dominio.personas;
 
 public class Auto {
 

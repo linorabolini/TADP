@@ -1,4 +1,4 @@
-package DI.dominio.Autos;
+package DI.dominio.personas;
 
 import java.util.ArrayList;
 
@@ -7,14 +7,13 @@ public class Persona {
 	int edad;
 	String nombre;
 	Auto auto;
-	private ArrayList<Persona> hijos;
-	private ArrayList<Integer> saldosTarjeta;
+	ArrayList<Persona> hijos;
+	ArrayList<Integer> saldosTarjeta;
+	private Mascota mascota;
 	
 	public Persona(int _edad, String _nombre){
 		this.setEdad(_edad);
 		this.setNombre(_nombre);
-		setHijos(new ArrayList<Persona>());
-		setSaldosTarjeta(new ArrayList<Integer>());
 	}
 	
 	public Persona(int _edad, String _nombre, ArrayList<Integer> _saldosTarjeta, ArrayList<Persona> _hijos){
@@ -28,8 +27,12 @@ public class Persona {
 		this.setEdad(_edad);
 		this.setNombre(_nombre);
 		this.setAuto(_auto);
-		setHijos(new ArrayList<Persona>());
-		setSaldosTarjeta(new ArrayList<Integer>());
+	}
+	
+	public Persona(int _edad, String _nombre, Mascota _mascota){
+		this.setEdad(_edad);
+		this.setNombre(_nombre);
+		this.setMascota(_mascota);
 	}
 	
 	
@@ -76,6 +79,14 @@ public class Persona {
 
 	public void setSaldosTarjeta(ArrayList<Integer> saldosTarjeta) {
 		this.saldosTarjeta = saldosTarjeta;
+	}
+
+	public Mascota getMascota() {
+		return mascota;
+	}
+
+	public void setMascota(Mascota mascota) {
+		this.mascota = mascota;
 	}
 
 }

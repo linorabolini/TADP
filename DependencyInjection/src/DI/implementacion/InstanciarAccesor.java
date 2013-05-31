@@ -20,9 +20,7 @@ public class InstanciarAccesor extends FormaInstanciar {
 			Method metodo = encontrarAccesor (accesor, componente.getClase().getMethods());
 			metodo.invoke(nuevoObjeto, dependencias.get(accesor).dameInstancia());
 		}
-		
 		return nuevoObjeto;	
-		
 	}
 
 
