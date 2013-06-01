@@ -4,11 +4,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import DI.implementacion.exceptions.ErrorInstanciacionException;
+import DI.implementacion.exceptions.NoSeEncuentraAccesorException;
+
 public abstract class FormaInstanciar {
 	
 	protected Map<Class<?>,Class<?>> clasesPrimitivas = new HashMap<Class<?>,Class<?>>();
 	
-	public abstract Object dameInstancia(Componente componente) throws InstantiationException, IllegalAccessException, IllegalArgumentException, NoSuchFieldException, SecurityException, InvocationTargetException, NoSuchMethodException;
+	public abstract Object dameInstancia(Componente componente);
 	
 	public abstract void agregarDependencia (String id, Instanciable instanciable);
 	

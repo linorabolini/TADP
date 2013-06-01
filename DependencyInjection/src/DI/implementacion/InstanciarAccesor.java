@@ -4,6 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
+import DI.implementacion.exceptions.ErrorInstanciacionException;
+import DI.implementacion.exceptions.NoSeEncuentraAccesorException;
+
 public class InstanciarAccesor extends FormaInstanciar {
 
 	HashMap<String,Instanciable> dependencias;
@@ -12,17 +15,21 @@ public class InstanciarAccesor extends FormaInstanciar {
 		dependencias = new HashMap<String,Instanciable>();
 	}
 	
-	public Object dameInstancia(Componente componente) throws InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException{
+	public Object dameInstancia(Componente componente){
 	
-		Object nuevoObjeto = componente.getClase().newInstance();		
-		
-		for (String accesor : dependencias.keySet()){
-			Method metodo = encontrarAccesor (accesor, componente.getClase().getMethods());
-			metodo.invoke(nuevoObjeto, dependencias.get(accesor).dameInstancia());
+		try{
+			Object nuevoObjeto = componente.getClase().newInstance();	
+			for (String accesor : dependencias.keySet()){
+				Method metodo = encontrarAccesor (accesor, componente.getClase().getMethods());
+				metodo.invoke(nuevoObjeto, dependencias.get(accesor).dameInstancia());
+			}
+			return nuevoObjeto;	
 		}
-		return nuevoObjeto;	
+		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException | SecurityException e){
+			throw new ErrorInstanciacionException(e);
+			
+		}
 	}
-
 
 	public void agregarDependencia(String id, Instanciable instanciable) {
 		dependencias.put(id, instanciable);
@@ -36,7 +43,7 @@ public class InstanciarAccesor extends FormaInstanciar {
 				return metodo;
 		}
 		
-		return null;
+		throw new NoSeEncuentraAccesorException();
 	}
 	
 	

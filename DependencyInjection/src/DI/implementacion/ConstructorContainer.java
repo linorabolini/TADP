@@ -1,5 +1,10 @@
 package DI.implementacion;
 
+import java.lang.reflect.InvocationTargetException;
+
+import DI.implementacion.exceptions.ComponenteNoRegistradoException;
+import DI.implementacion.exceptions.NoSeEncuentraAccesorException;
+
 public class ConstructorContainer extends Container {
 	
 	public void registrarComponente (String id, Class<?> clase){
@@ -26,6 +31,10 @@ public class ConstructorContainer extends Container {
 	public void agregarDependenciaListaConfigurada (String id, Class<?> claseLista, String... dependencias){
 		
 		this.agregarDependenciaListaConfigurada(id, "", claseLista, dependencias);
+	}
+	
+	public Object instanciaDe (String id){
+		return componentes.get(id).dameInstancia();
 	}
 
 }

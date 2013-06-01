@@ -14,7 +14,7 @@ public class asdf {
 	
 	Auto auto;
 	Persona persona;
-	/*ConstructorContainer contenedor = new ConstructorContainer ();
+	ConstructorContainer contenedor = new ConstructorContainer ();
 	contenedor.registrarComponente("autito", Auto.class);
 	contenedor.agregarDependencia("autito", 4);
 	contenedor.agregarDependencia("autito", "Fiat 600");
@@ -35,7 +35,7 @@ public class asdf {
 	contenedor.agregarDependencia("personita", 121);
 	contenedor.agregarDependencia("personita", "cochy");
 	contenedor.agregarDependenciaLista("personita", ArrayList.class, 4,5,6,7,8);
-	contenedor.agregarDependenciaListaConfigurada("personita", ArrayList.class, "hijo1", "hijo2", "hijo3");*/
+	contenedor.agregarDependenciaListaConfigurada("personita", ArrayList.class, "hijo1", "hijo2", "hijo3");
 	
 	/*PropertyContainer contenedor = new PropertyContainer ();
 	contenedor.registrarComponente("autito", Auto.class);

@@ -1,18 +1,17 @@
 package DI.implementacion;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import junit.framework.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import DI.dominio.personas.*;
+import DI.implementacion.exceptions.*;
 
 public class ContainersTests{
 
 	@Test
-	public void testConstructorContainerCamposPrimitivos() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException {
+	public void testConstructorContainerCamposPrimitivos(){
 		ConstructorContainer contenedor = new ConstructorContainer();
 		contenedor.registrarComponente("autito", Auto.class);
 		contenedor.agregarDependencia("autito", 4);
@@ -23,7 +22,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testAccesorContainerCamposPrimitivos() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException {
+	public void testAccesorContainerCamposPrimitivos(){
 		AccesorContainer contenedor = new AccesorContainer ();
 		contenedor.registrarComponente("autito", Auto.class);
 		contenedor.agregarDependencia("autito","ruedas",  4);
@@ -34,7 +33,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testPropertiesContainerCamposPrimitivos() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException {
+	public void testPropertiesContainerCamposPrimitivos(){
 		PropertyContainer contenedor = new PropertyContainer ();
 		contenedor.registrarComponente("autito", Auto.class);
 		contenedor.agregarDependencia("autito","ruedas",  4);
@@ -45,7 +44,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testAccesorContainerSinAlgunosCampos() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public void testAccesorContainerSinAlgunosCampos(){
 		AccesorContainer contenedor = new AccesorContainer ();
 		contenedor.registrarComponente("autito", Auto.class);
 		contenedor.agregarDependencia("autito","modelo","Fiat 600");
@@ -55,7 +54,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testPropertiesContainerSinAlgunosCampos() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public void testPropertiesContainerSinAlgunosCampos(){
 		PropertyContainer contenedor = new PropertyContainer ();
 		contenedor.registrarComponente("autito", Auto.class);
 		contenedor.agregarDependencia("autito","ruedas",  4);
@@ -65,7 +64,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testAccesorContainerConDependenciaConfigurada() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public void testAccesorContainerConDependenciaConfigurada(){
 		AccesorContainer contenedor = new AccesorContainer ();
 		contenedor.registrarComponente("autito", Auto.class);
 		contenedor.agregarDependencia("autito","modelo","Fiat 600");
@@ -85,7 +84,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testConstructorContainerConDependenciaConfigurada() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public void testConstructorContainerConDependenciaConfigurada(){
 		ConstructorContainer contenedor = new ConstructorContainer ();
 		contenedor.registrarComponente("autito", Auto.class);
 		contenedor.agregarDependencia("autito", 4);
@@ -105,7 +104,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testPropertyContainerConDependenciaConfigurada() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public void testPropertyContainerConDependenciaConfigurada(){
 		PropertyContainer contenedor = new PropertyContainer ();
 		contenedor.registrarComponente("autito", Auto.class);
 		contenedor.agregarDependencia("autito","modelo","Fiat 600");
@@ -125,7 +124,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testPropertyContainerListaValoresPrimitivos() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public void testPropertyContainerListaValoresPrimitivos(){
 		PropertyContainer contenedor = new PropertyContainer ();
 		contenedor.registrarComponente("personita", Persona.class);
 		contenedor.agregarDependenciaLista("personita", "saldosTarjeta", ArrayList.class, 4,5,6,7,8);
@@ -134,7 +133,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testAccesorContainerListaDependenciasConfiguradas() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public void testAccesorContainerListaDependenciasConfiguradas(){
 		AccesorContainer contenedor = new AccesorContainer ();
 		contenedor.registrarComponente("personita", Persona.class);
 		
@@ -159,7 +158,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testPropertyContainerObjectoSinRegistrar()  throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public void testPropertyContainerObjectoSinRegistrar(){
 		
 		PropertyContainer contenedor = new PropertyContainer();
 		contenedor.registrarComponente("personita", Persona.class);
@@ -174,7 +173,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testConstructorContainerMascotaPerro() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public void testConstructorContainerMascotaPerro(){
 		
 		ConstructorContainer contenedor = new ConstructorContainer();
 		contenedor.registrarComponente("personita", Persona.class);
@@ -195,7 +194,7 @@ public class ContainersTests{
 	}
 	
 	@Test
-	public void testConstructorContainerMascotaGato() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public void testConstructorContainerMascotaGato(){
 		
 		ConstructorContainer contenedor = new ConstructorContainer();
 		contenedor.registrarComponente("personita", Persona.class);
@@ -209,10 +208,62 @@ public class ContainersTests{
 		contenedor.agregarDependencia("gatito", "Felix el Gato");
 		contenedor.agregarDependencia("gatito", 7);
 		contenedor.agregarDependenciaConfigurada("personita", "gatito");
-		persona = (Persona) contenedor.instanciaDe("personita");
 		
+		persona = (Persona) contenedor.instanciaDe("personita");
+	
 		Assert.assertEquals(7, ((Gato) persona.getMascota()).getVidas());
 		Assert.assertEquals("Felix el Gato", ((Gato) persona.getMascota()).getNombre());
+	}
+	
+	@Test (expected=ComponenteNoRegistradoException.class)
+	public void testConstructorContainerComponenteNoRegistradoException(){
+		ConstructorContainer contenedor = new ConstructorContainer();
+		contenedor.registrarComponente("autito", Auto.class);
+		contenedor.agregarDependencia("saraza", 4); //LINEA DONDE VA A TIRAR LA EXCEPCION
+		contenedor.agregarDependencia("autito", "Fiat 600");
+		Auto auto = (Auto) contenedor.instanciaDe("autito");
+		Assert.assertEquals(4, auto.getRuedas());
+		Assert.assertEquals("Fiat 600", auto.getModelo());
+	}
+	
+	@Test (expected=ComponenteNoRegistradoException.class)
+	public void testPropertyContainerConDependenciaConfiguradaNoRegistrada(){
+		PropertyContainer contenedor = new PropertyContainer ();
+		contenedor.registrarComponente("autito", Auto.class);
+		contenedor.agregarDependencia("autito","modelo","Fiat 600");
+		contenedor.agregarDependencia("autito","ruedas",4);
+		contenedor.registrarComponente("personita", Persona.class);
+		contenedor.agregarDependencia("personita","nombre",  "cochy");
+		contenedor.agregarDependencia("personita", "edad", 121);
+		contenedor.agregarDependenciaConfigurada("personita", "auto",""); //LINEA DONDE VA A TIRAR LA EXCEPCION
+		
+		Persona persona = (Persona) contenedor.instanciaDe("personita");
+		Auto auto = persona.getAuto();
+		
+		Assert.assertEquals(4, auto.getRuedas());
+		Assert.assertEquals("Fiat 600", auto.getModelo());
+		Assert.assertEquals("cochy", persona.getNombre());
+		Assert.assertEquals(121, persona.getEdad());
+	}
+	
+	@Test (expected=NoSeEncuentraPropertyException.class)
+	public void testPropertyContainerConDependenciaConfiguradaPropiedadNoExiste(){
+		PropertyContainer contenedor = new PropertyContainer ();
+		contenedor.registrarComponente("autito", Auto.class);
+		contenedor.agregarDependencia("autito","modelo","Fiat 600");
+		contenedor.agregarDependencia("autito","ruedas",4);
+		contenedor.registrarComponente("personita", Persona.class);
+		contenedor.agregarDependencia("personita","nombre",  "cochy");
+		contenedor.agregarDependencia("personita", "edadto5h", 121); //LINEA DONDE VA A TIRAR LA EXCEPCION
+		contenedor.agregarDependenciaConfigurada("personita", "auto","autito"); 
+		
+		Persona persona = (Persona) contenedor.instanciaDe("personita");
+		Auto auto = persona.getAuto();
+		
+		Assert.assertEquals(4, auto.getRuedas());
+		Assert.assertEquals("Fiat 600", auto.getModelo());
+		Assert.assertEquals("cochy", persona.getNombre());
+		Assert.assertEquals(121, persona.getEdad());
 	}
 	
 	

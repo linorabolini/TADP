@@ -4,6 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import DI.implementacion.exceptions.ErrorInstanciacionException;
+import DI.implementacion.exceptions.NoSeEncuentraAccesorException;
+
 public class Lista implements Instanciable{
 	
 	Class<?> clase;
@@ -14,9 +17,14 @@ public class Lista implements Instanciable{
 		valores = _valores;
 	}
 	
-	public Object dameInstancia() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException {
+	public Object dameInstancia(){
 		
-		Collection lista = (Collection) clase.newInstance();
+		Collection lista;
+		try {
+			lista = (Collection) clase.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			throw new ErrorInstanciacionException(e);
+		}
 		for (Instanciable valor: valores){
 			lista.add(valor.dameInstancia());
 		}

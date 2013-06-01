@@ -4,6 +4,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
+import DI.implementacion.exceptions.ErrorInstanciacionException;
+import DI.implementacion.exceptions.NoSeEncuentraAccesorException;
+import DI.implementacion.exceptions.NoSeEncuentraPropertyException;
+
 public class InstanciarProperty extends FormaInstanciar {
 	
 	HashMap<String,Instanciable> dependencias;
@@ -12,14 +16,29 @@ public class InstanciarProperty extends FormaInstanciar {
 		dependencias = new HashMap<String,Instanciable>();
 	}
 	
-	public Object dameInstancia(Componente componente) throws InstantiationException, IllegalAccessException, IllegalArgumentException, NoSuchFieldException, SecurityException, InvocationTargetException, NoSuchMethodException{
+	public Object dameInstancia(Componente componente){
 		
-		Object nuevoObjeto = componente.getClase().newInstance();		
+		Object nuevoObjeto = null;
+		try {
+			nuevoObjeto = componente.getClase().newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			throw new ErrorInstanciacionException(e);
+		}		
 		
 		for (String propiedad : dependencias.keySet()){
-			Field campo = componente.getClase().getDeclaredField(propiedad);
+			
+			Field campo;
+			try {
+				campo = componente.getClase().getDeclaredField(propiedad);
+			} catch (NoSuchFieldException | SecurityException e) {
+				throw new NoSeEncuentraPropertyException();
+			}
 			campo.setAccessible(true);
-			campo.set(nuevoObjeto, dependencias.get(propiedad).dameInstancia());
+			try {
+				campo.set(nuevoObjeto, dependencias.get(propiedad).dameInstancia());
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				throw new ErrorInstanciacionException(e);
+			}
 			campo.setAccessible(false);
 		}
 		

@@ -4,6 +4,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import DI.implementacion.exceptions.ErrorInstanciacionException;
+import DI.implementacion.exceptions.NoSeEncuentraAccesorException;
+import DI.implementacion.exceptions.NoSeEncuentraConstructorException;
+
 public class InstanciarConstructor extends FormaInstanciar {
 	
 	ArrayList<Instanciable> dependencias;
@@ -13,7 +17,7 @@ public class InstanciarConstructor extends FormaInstanciar {
 		inicializarClasesPrimitivas();
 	}
 	
-	public Object dameInstancia(Componente componente) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	public Object dameInstancia(Componente componente){
 		
 		Constructor<?>[] constructores = componente.getClase().getConstructors();
 		
@@ -25,9 +29,14 @@ public class InstanciarConstructor extends FormaInstanciar {
 		
 		Constructor<?> constructor = seleccionarConstructor(constructores, dependencias);
 		if ( constructor != null)
-			return constructor.newInstance(argumentos.toArray());
+			try {
+				return constructor.newInstance(argumentos.toArray());
+			} catch (InstantiationException | IllegalAccessException
+					| IllegalArgumentException | InvocationTargetException e) {
+				throw new ErrorInstanciacionException(e);
+			}
 		else
-			return null;
+			throw new NoSeEncuentraConstructorException();
 	}
 	
 	public void agregarDependencia (String id, Instanciable instanciable){
@@ -36,7 +45,7 @@ public class InstanciarConstructor extends FormaInstanciar {
 		
 	}
 	
-	Constructor<?> seleccionarConstructor(Constructor<?>[] constructores, ArrayList<Instanciable> dependencias) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	Constructor<?> seleccionarConstructor(Constructor<?>[] constructores, ArrayList<Instanciable> dependencias){
 		
 		for(Constructor<?> constructor : constructores){
 			Class<?>[] clasesParametros = constructor.getParameterTypes();
@@ -47,7 +56,7 @@ public class InstanciarConstructor extends FormaInstanciar {
 		return null;
 	}
 	
-	boolean correspondeConstructor(Class<?>[] clasesParametros, ArrayList<Instanciable> argumentos) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
+	boolean correspondeConstructor(Class<?>[] clasesParametros, ArrayList<Instanciable> argumentos){
 		
 		int i=0;
 		

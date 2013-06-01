@@ -1,8 +1,8 @@
 package DI.implementacion;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import DI.implementacion.exceptions.*;
 
 public abstract class Container {
 	
@@ -10,10 +10,6 @@ public abstract class Container {
 	
 	public Container(){
 		componentes = new HashMap<String,Componente>();
-	}
-	
-	public Object instanciaDe (String id) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
-		return componentes.get(id).dameInstancia();
 	}
 	
 	protected void registrarComponente (String id, Componente nuevoComponente){
@@ -24,19 +20,27 @@ public abstract class Container {
 	protected void agregarDependencia (String id,  String dependenciaId, Valor dependencia){
 		
 		Componente componente = componentes.get(id);
+		if (componente == null)
+			throw new ComponenteNoRegistradoException();
 		componente.agregarDependencia(dependenciaId,dependencia);
 	}
 	
 	protected void agregarDependenciaConfigurada (String id, String dependenciaId, String dependencia){
 		
 		Componente componente = componentes.get(id);
+		if (componente == null)
+			throw new ComponenteNoRegistradoException();
 		if (componentes.containsKey(dependencia)){
 			componente.agregarDependencia(dependenciaId, componentes.get(dependencia));
 		}
+		else
+			throw new ComponenteNoRegistradoException();
 	}
 	
 	protected void agregarDependenciaLista (String id, String dependenciaId, Class<?> claseLista, Object... valores){
 		Componente componente = componentes.get(id);
+		if (componente == null)
+			throw new ComponenteNoRegistradoException();
 		ArrayList<Instanciable> instanciables = new ArrayList<Instanciable>();
 		for (Object valor: valores){
 			instanciables.add(new Valor(valor, valor.getClass()));
@@ -47,11 +51,15 @@ public abstract class Container {
 	
 	protected void agregarDependenciaListaConfigurada (String id, String dependenciaId, Class<?> claseLista, String... dependencias){
 		Componente componente = componentes.get(id);
+		if (componente == null)
+			throw new ComponenteNoRegistradoException();
 		ArrayList<Instanciable> valores = new ArrayList<Instanciable>();
 		for (Object dependencia: dependencias){
 			if (componentes.containsKey(dependencia)){
 				valores.add(componentes.get(dependencia));
 			}
+			else
+				throw new ComponenteNoRegistradoException();
 		}
 		componente.agregarDependencia(dependenciaId, new Lista(claseLista, valores));
 	}

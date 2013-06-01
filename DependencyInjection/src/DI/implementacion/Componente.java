@@ -1,7 +1,5 @@
 package DI.implementacion;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class Componente implements Instanciable{
 
 	private Class<?> clase;
@@ -12,8 +10,8 @@ public class Componente implements Instanciable{
 		this.formaInstanciar = forma;
 	}
 		
-	public Object dameInstancia() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException, NoSuchMethodException{
-		return formaInstanciar.dameInstancia(this);	
+	public Object dameInstancia(){
+		return formaInstanciar.dameInstancia(this);
 	}
 	
 	public void agregarDependencia(String id, Instanciable instanciable){
