@@ -65,7 +65,7 @@ public class InstanciarConstructor extends FormaInstanciar {
 		for (Class<?> clase : clasesParametros){
 						
 			if (clase.isPrimitive()){
-				if (!(clasesPrimitivas.get(argumentos.get(i).getClase()).getName() == clase.getName()))
+				if ((clasesPrimitivas.get(argumentos.get(i).getClase()).getName().compareTo(clase.getName())) !=0)
 					return false; 
 			}
 			else
