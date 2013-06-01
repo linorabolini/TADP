@@ -1,6 +1,7 @@
 package DI.implementacion;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import DI.implementacion.exceptions.*;
 
@@ -38,6 +39,9 @@ public abstract class Container {
 	}
 	
 	protected void agregarDependenciaLista (String id, String dependenciaId, Class<?> claseLista, Object... valores){
+		if (!Collection.class.isAssignableFrom(claseLista))
+			throw new NoEsCollectionException();
+		
 		Componente componente = componentes.get(id);
 		if (componente == null)
 			throw new ComponenteNoRegistradoException();
@@ -50,6 +54,9 @@ public abstract class Container {
 	}
 	
 	protected void agregarDependenciaListaConfigurada (String id, String dependenciaId, Class<?> claseLista, String... dependencias){
+		if (!Collection.class.isAssignableFrom(claseLista))
+			throw new NoEsCollectionException();
+		
 		Componente componente = componentes.get(id);
 		if (componente == null)
 			throw new ComponenteNoRegistradoException();

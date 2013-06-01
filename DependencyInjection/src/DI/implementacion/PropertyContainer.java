@@ -1,9 +1,5 @@
 package DI.implementacion;
 
-import java.lang.reflect.InvocationTargetException;
-
-import DI.implementacion.exceptions.ComponenteNoRegistradoException;
-import DI.implementacion.exceptions.NoSeEncuentraAccesorException;
 
 public class PropertyContainer extends Container {
 

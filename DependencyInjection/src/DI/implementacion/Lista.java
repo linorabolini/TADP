@@ -1,11 +1,9 @@
 package DI.implementacion;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import DI.implementacion.exceptions.ErrorInstanciacionException;
-import DI.implementacion.exceptions.NoSeEncuentraAccesorException;
 
 public class Lista implements Instanciable{
 	

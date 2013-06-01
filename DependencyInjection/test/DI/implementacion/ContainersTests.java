@@ -219,7 +219,7 @@ public class ContainersTests{
 	public void testConstructorContainerComponenteNoRegistradoException(){
 		ConstructorContainer contenedor = new ConstructorContainer();
 		contenedor.registrarComponente("autito", Auto.class);
-		contenedor.agregarDependencia("saraza", 4); //LINEA DONDE VA A TIRAR LA EXCEPCION
+		contenedor.agregarDependencia("saraza", 4); //LINEA DONDE ESTA EL ERROR (no se registro un componente "saraza")
 		contenedor.agregarDependencia("autito", "Fiat 600");
 		Auto auto = (Auto) contenedor.instanciaDe("autito");
 		Assert.assertEquals(4, auto.getRuedas());
@@ -235,7 +235,7 @@ public class ContainersTests{
 		contenedor.registrarComponente("personita", Persona.class);
 		contenedor.agregarDependencia("personita","nombre",  "cochy");
 		contenedor.agregarDependencia("personita", "edad", 121);
-		contenedor.agregarDependenciaConfigurada("personita", "auto",""); //LINEA DONDE VA A TIRAR LA EXCEPCION
+		contenedor.agregarDependenciaConfigurada("personita", "auto",""); //LINEA DONDE ESTA EL ERROR (no se registro un componente "")
 		
 		Persona persona = (Persona) contenedor.instanciaDe("personita");
 		Auto auto = persona.getAuto();
@@ -254,7 +254,7 @@ public class ContainersTests{
 		contenedor.agregarDependencia("autito","ruedas",4);
 		contenedor.registrarComponente("personita", Persona.class);
 		contenedor.agregarDependencia("personita","nombre",  "cochy");
-		contenedor.agregarDependencia("personita", "edadto5h", 121); //LINEA DONDE VA A TIRAR LA EXCEPCION
+		contenedor.agregarDependencia("personita", "edadto5h", 121); //LINEA DONDE ESTA EL ERROR (no tiene un atributo "edadto5h")
 		contenedor.agregarDependenciaConfigurada("personita", "auto","autito"); 
 		
 		Persona persona = (Persona) contenedor.instanciaDe("personita");
@@ -266,5 +266,32 @@ public class ContainersTests{
 		Assert.assertEquals(121, persona.getEdad());
 	}
 	
+	@Test (expected=NoSeEncuentraAccesorException.class)
+	public void testAccesorContainerNoSeEncuentraSccesorException(){
+		AccesorContainer contenedor = new AccesorContainer ();
+		contenedor.registrarComponente("personita", Persona.class);
+		contenedor.agregarDependencia("personita", "edad", 20);
+		contenedor.agregarDependencia("personita", "aaaa", "rocky"); //LINEA DONDE ESTA EL ERROR (no existe el atributo "aaaa")
+		Persona persona = (Persona) contenedor.instanciaDe("personita");
+	}
+		
+	@Test (expected=NoSeEncuentraConstructorException.class)
+	public void testConstructorContainerNoSeEncuentraConstructorException(){
+		ConstructorContainer contenedor = new ConstructorContainer();
+		contenedor.registrarComponente("autito", Auto.class);
+		contenedor.agregarDependencia("autito", 4.5); //LINEA DONDE ESTA EL ERROR (no tiene constructor con parametro double)
+		contenedor.agregarDependencia("autito", "Fiat 600");
+		Auto auto = (Auto) contenedor.instanciaDe("autito");
+		Assert.assertEquals(4, auto.getRuedas());
+		Assert.assertEquals("Fiat 600", auto.getModelo());
+	}
 	
+	@Test (expected=NoEsCollectionException.class)
+	public void testPropertyContainerListaValoresPrimitivosNoEsCollectionException(){
+		PropertyContainer contenedor = new PropertyContainer ();
+		contenedor.registrarComponente("personita", Persona.class);
+		contenedor.agregarDependenciaLista("personita", "saldosTarjeta", int.class, 4,5,6,7,8);
+		Persona persona = (Persona) contenedor.instanciaDe("personita");
+		Assert.assertEquals(5, persona.getSaldosTarjeta().size() );
+	}
 }

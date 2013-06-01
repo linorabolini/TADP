@@ -1,11 +1,9 @@
 package DI.implementacion;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import DI.implementacion.exceptions.ErrorInstanciacionException;
-import DI.implementacion.exceptions.NoSeEncuentraAccesorException;
 import DI.implementacion.exceptions.NoSeEncuentraPropertyException;
 
 public class InstanciarProperty extends FormaInstanciar {

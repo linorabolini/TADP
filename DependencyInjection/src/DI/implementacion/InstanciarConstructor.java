@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import DI.implementacion.exceptions.ErrorInstanciacionException;
-import DI.implementacion.exceptions.NoSeEncuentraAccesorException;
 import DI.implementacion.exceptions.NoSeEncuentraConstructorException;
 
 public class InstanciarConstructor extends FormaInstanciar {
