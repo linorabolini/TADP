@@ -9,25 +9,22 @@ public class AccesorContainer extends Container {
 	}
 	
 	public void agregarDependencia (String id, String property, Object dependencia){
-		
-		String nombreAccessorProperty = "set"+property.toUpperCase().charAt(0)+property.substring(1);
-		this.agregarDependencia(id, nombreAccessorProperty, new Valor(dependencia,dependencia.getClass()));
+		this.agregarDependencia(id, toSetAccessor(property), new Valor(dependencia,dependencia.getClass()));
 	}
-	
+
 	public void agregarDependenciaConfigurada (String id,String property, String dependencia){
-	
-		String nombreAccessorProperty = "set"+property.toUpperCase().charAt(0)+property.substring(1);
-		super.agregarDependenciaConfigurada(id, nombreAccessorProperty, dependencia);
+		super.agregarDependenciaConfigurada(id, toSetAccessor(property), dependencia);
 	}
 	
 	public void agregarDependenciaLista (String id, String property, Class<?> claseLista, Object... valores){
-		
-		String nombreAccessorProperty = "set"+property.toUpperCase().charAt(0)+property.substring(1);
-		super.agregarDependenciaLista(id, nombreAccessorProperty, claseLista, valores);
+		super.agregarDependenciaLista(id, toSetAccessor(property), claseLista, valores);
 	}
 	
 	public void agregarDependenciaListaConfigurada (String id, String property, Class<?> claseLista, String... dependencias){
-		String nombreAccessorProperty = "set"+property.toUpperCase().charAt(0)+property.substring(1);
-		super.agregarDependenciaListaConfigurada(id, nombreAccessorProperty, claseLista, dependencias);
+		super.agregarDependenciaListaConfigurada(id, toSetAccessor(property), claseLista, dependencias);
+	}
+	
+	private String toSetAccessor(String property) {
+		return "set"+property.toUpperCase().charAt(0)+property.substring(1);
 	}
 }
