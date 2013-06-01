@@ -29,11 +29,13 @@ public class Persona {
 		this.setAuto(_auto);
 	}
 	
+	
 	public Persona(int _edad, String _nombre, Mascota _mascota){
 		this.setEdad(_edad);
 		this.setNombre(_nombre);
 		this.setMascota(_mascota);
 	}
+	
 	
 	
 	public Persona(){

@@ -15,12 +15,14 @@ public abstract class FormaInstanciar {
 		clasesPrimitivas.put(Integer.class, int.class );
 		clasesPrimitivas.put(Long.class, long.class);
 		clasesPrimitivas.put(Double.class, double.class);
-		clasesPrimitivas.put( Float.class, float.class);
+		clasesPrimitivas.put(Float.class, float.class);
 		clasesPrimitivas.put(Boolean.class, boolean.class);
 		clasesPrimitivas.put(Character.class, char.class);
 		clasesPrimitivas.put(Byte.class, byte.class );
 		clasesPrimitivas.put(Void.class, void.class);
 		clasesPrimitivas.put(Short.class, short.class);
+		
+		
 	}
 
 }

@@ -107,7 +107,7 @@ public class ContainersTests{
 	
 	@Test
 	public void testPropertyContainerConDependenciaConfigurada(){
-		PropertyContainer contenedor = new PropertyContainer ();
+		PropertyContainer contenedor = new PropertyContainer();
 		contenedor.registrarComponente("autito", Auto.class);
 		contenedor.agregarDependencia("autito","modelo","Fiat 600");
 		contenedor.agregarDependencia("autito","ruedas",4);
