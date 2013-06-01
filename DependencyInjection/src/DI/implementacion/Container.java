@@ -71,4 +71,8 @@ public abstract class Container {
 		}
 		componente.agregarDependencia(dependenciaId, new Lista(claseLista, valores));
 	}
+	
+	public Object instanciaDe (String id){
+		return componentes.get(id).dameInstancia();
+	}
 }

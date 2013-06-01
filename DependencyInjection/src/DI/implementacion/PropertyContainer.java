@@ -27,8 +27,4 @@ public class PropertyContainer extends Container {
 		
 		super.agregarDependenciaListaConfigurada(id, property, claseLista, dependencias);
 	}
-	
-	public Object instanciaDe (String id){
-		return componentes.get(id).dameInstancia();
-	}
 }

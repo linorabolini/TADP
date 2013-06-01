@@ -28,9 +28,5 @@ public class ConstructorContainer extends Container {
 		
 		this.agregarDependenciaListaConfigurada(id, "", claseLista, dependencias);
 	}
-	
-	public Object instanciaDe (String id){
-		return componentes.get(id).dameInstancia();
-	}
 
 }

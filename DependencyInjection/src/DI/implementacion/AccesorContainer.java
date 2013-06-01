@@ -30,9 +30,4 @@ public class AccesorContainer extends Container {
 		String nombreAccessorProperty = "set"+property.toUpperCase().charAt(0)+property.substring(1);
 		super.agregarDependenciaListaConfigurada(id, nombreAccessorProperty, claseLista, dependencias);
 	}
-	
-	public Object instanciaDe (String id){
-		return componentes.get(id).dameInstancia();
-	}
-
 }
