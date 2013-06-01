@@ -1,6 +1,6 @@
 package DI.implementacion.exceptions;
 
-public class NoEsCollectionException extends RuntimeException {
+public class NoEsCollectionConcretoException extends RuntimeException {
 	
 	@Override
 	public String getMessage(){

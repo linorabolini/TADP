@@ -1,5 +1,6 @@
 package DI.implementacion;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -39,8 +40,8 @@ public abstract class Container {
 	}
 	
 	protected void agregarDependenciaLista (String id, String dependenciaId, Class<?> claseLista, Object... valores){
-		if (!Collection.class.isAssignableFrom(claseLista))
-			throw new NoEsCollectionException();
+		if (!Collection.class.isAssignableFrom(claseLista) || (Modifier.isAbstract(claseLista.getModifiers()) || claseLista.isInterface()))
+			throw new NoEsCollectionConcretoException();
 		
 		Componente componente = componentes.get(id);
 		if (componente == null)
@@ -54,8 +55,8 @@ public abstract class Container {
 	}
 	
 	protected void agregarDependenciaListaConfigurada (String id, String dependenciaId, Class<?> claseLista, String... dependencias){
-		if (!Collection.class.isAssignableFrom(claseLista))
-			throw new NoEsCollectionException();
+		if (!Collection.class.isAssignableFrom(claseLista) || (Modifier.isAbstract(claseLista.getModifiers()) || claseLista.isInterface()))
+			throw new NoEsCollectionConcretoException();
 		
 		Componente componente = componentes.get(id);
 		if (componente == null)

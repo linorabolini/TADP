@@ -1,6 +1,8 @@
 package DI.implementacion;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
 
 import junit.framework.Assert;
 import org.junit.Test;
@@ -286,11 +288,20 @@ public class ContainersTests{
 		Assert.assertEquals("Fiat 600", auto.getModelo());
 	}
 	
-	@Test (expected=NoEsCollectionException.class)
-	public void testPropertyContainerListaValoresPrimitivosNoEsCollectionException(){
+	@Test (expected=NoEsCollectionConcretoException.class)
+	public void testPropertyContainerListaValoresPrimitivosNoEsCollectionConcretaException(){
 		PropertyContainer contenedor = new PropertyContainer ();
 		contenedor.registrarComponente("personita", Persona.class);
-		contenedor.agregarDependenciaLista("personita", "saldosTarjeta", int.class, 4,5,6,7,8);
+		contenedor.agregarDependenciaLista("personita", "saldosTarjeta", int.class, 4,5,6,7,8); //LINEA DONDE ESTA EL ERROR (la clase pasada debe ser una implementacion concreta de Collection)
+		Persona persona = (Persona) contenedor.instanciaDe("personita");
+		Assert.assertEquals(5, persona.getSaldosTarjeta().size() );
+	}
+	
+	@Test (expected=NoEsCollectionConcretoException.class)
+	public void testPropertyContainerListaValoresPrimitivosNoEsCollectionConcretaExceptionInterfaz(){
+		PropertyContainer contenedor = new PropertyContainer ();
+		contenedor.registrarComponente("personita", Persona.class);
+		contenedor.agregarDependenciaLista("personita", "saldosTarjeta", Collection.class, 4,5,6,7,8); //LINEA DONDE ESTA EL ERROR (la clase pasada debe ser una implementacion concreta de Collection)
 		Persona persona = (Persona) contenedor.instanciaDe("personita");
 		Assert.assertEquals(5, persona.getSaldosTarjeta().size() );
 	}
