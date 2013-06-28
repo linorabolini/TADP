@@ -16,6 +16,12 @@ public class Persona {
 		this.setNombre(_nombre);
 	}
 	
+	public Persona(int _edad, String _nombre, ArrayList<Integer> _saldosTarjeta){
+		this.setEdad(_edad);
+		this.setNombre(_nombre);
+		setSaldosTarjeta(_saldosTarjeta);
+	}
+	
 	public Persona(int _edad, String _nombre, ArrayList<Integer> _saldosTarjeta, ArrayList<Persona> _hijos){
 		this.setEdad(_edad);
 		this.setNombre(_nombre);

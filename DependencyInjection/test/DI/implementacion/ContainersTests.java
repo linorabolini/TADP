@@ -131,7 +131,7 @@ public class ContainersTests{
 		contenedor.registrarComponente("personita", Persona.class);
 		contenedor.agregarDependenciaLista("personita", "saldosTarjeta", ArrayList.class, 4,5,6,7,8);
 		Persona persona = (Persona) contenedor.instanciaDe("personita");
-		Assert.assertEquals(5, persona.getSaldosTarjeta().size() );
+		Assert.assertEquals(5, persona.getSaldosTarjeta().size());
 	}
 	
 	@Test
