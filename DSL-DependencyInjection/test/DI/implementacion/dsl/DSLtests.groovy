@@ -24,7 +24,7 @@ class DSLtests {
 		
 		def contenedor = especificacionConstructor {
 			
-			registrar objeto llamado autito de la clase Auto.class con las dependencias 4,"Fiat 600"
+			registrar objeto llamado autito de la clase Auto.class con las dependencias ([4,"Fiat 600"])
 			
 		}
 		
@@ -38,9 +38,9 @@ class DSLtests {
 		
 		def contenedor = especificacionConstructor {
 			
-			registrar objeto llamado autito de la clase Auto.class con las dependencias 4,"Fiat 600"
+			registrar objeto llamado autito de la clase Auto.class con las dependencias ([4,"Fiat 600"])
 			
-			registrar objeto llamado personita de la clase Persona.class con las dependencias "cochy",121,autito
+			registrar objeto llamado personita de la clase Persona.class con las dependencias (["cochy",121,autito])
 			
 		}
 		
@@ -58,9 +58,9 @@ class DSLtests {
 	void testConstructorContainerMascotaPerro(){
 		def contenedor = especificacionConstructor {
 			
-			registrar objeto llamado perrito de la clase Perro.class con las dependencias "Scooby Doo",true
+			registrar objeto llamado perrito de la clase Perro.class con las dependencias (["Scooby Doo",true])
 			
-			registrar objeto llamado personita de la clase Persona.class con las dependencias 20,"Ricky Ricon",perrito
+			registrar objeto llamado personita de la clase Persona.class con las dependencias ([20,"Ricky Ricon",perrito])
 		}
 		
 		def persona = (Persona) contenedor.instanciaDe("personita")
@@ -73,9 +73,9 @@ class DSLtests {
 		
 		def contenedor = especificacionConstructor {
 			
-			registrar objeto llamado gatito de la clase Gato.class con las dependencias "Felix el Gato",7
+			registrar objeto llamado gatito de la clase Gato.class con las dependencias (["Felix el Gato",7])
 			
-			registrar objeto llamado personita de la clase Persona.class con las dependencias 20,"Ricky Ricon",gatito
+			registrar objeto llamado personita de la clase Persona.class con las dependencias ([20,"Ricky Ricon",gatito])
 		}
 		
 		def persona = (Persona) contenedor.instanciaDe("personita")
@@ -88,7 +88,7 @@ class DSLtests {
 		
 		def contenedor = especificacionConstructor {
 			
-			registrar objeto llamado personita de la clase Persona.class con las dependencias 20,"Ricky Ricon",[4,8,9,10]
+			registrar objeto llamado personita de la clase Persona.class con las dependencias ([20,"Ricky Ricon",[4,8,9,10]])
 		}
 		
 		def persona = (Persona) contenedor.instanciaDe("personita")
@@ -101,7 +101,7 @@ class DSLtests {
 		
 		def contenedor = especificacionConstructor{
 			
-			registrar objeto llamado autito de la clase Autito.class con las dependencias 4.5,"Fiat 600" //EN EL CONSTRUCTOR NO HAY NINGUN PARAMETRO DOUBLE
+			registrar objeto llamado autito de la clase Autito.class con las dependencias ([4.5,"Fiat 600"]) //EN EL CONSTRUCTOR NO HAY NINGUN PARAMETRO DOUBLE
 			
 		}
 		
@@ -321,33 +321,49 @@ class DSLtests {
 	}
 	
 	@Test
+	void testConstructorContainerListaDependenciasConfiguradas(){
+		
+		def contenedor = especificacionConstructor{
+			
+			registrar lista de objetos tipo Persona.class llamada hijos con las especificaciones([
+				[10, pipo],
+				[12, juan],
+				[15, mina]
+			])
+			
+			registrar objeto llamado personita de la clase Persona.class con las dependencias ([40,papa,[4,5,6,7],hijos])
+			
+		}
+		
+		def persona = (Persona) contenedor.instanciaDe("personita")
+		
+		assertEquals(40,persona.getEdad())
+		assertEquals(3, persona.getHijos().size())
+		assertEquals(12, persona.getHijos().get(1).getEdad())
+		assertEquals("juan", persona.getHijos().get(1).getNombre())
+	}
+	
+	@Test
 	void testAccesorContainerListaDependenciasConfiguradas(){
 		
 		def contenedor = especificacionAccesors{
 			
-			registrar objeto llamado hijo1 de la clase Persona.class con las dependencias([
-				edad : 10,
-				nombre : pipo
+			registrar lista de objetos tipo Persona.class llamada hijos con las especificaciones([
+				[edad : 10, nombre : pipo],
+				[edad : 12, nombre : juan],
+				[edad : 15, nombre : mina]
 			])
-			
-			registrar objeto llamado hijo2 de la clase Persona.class con las dependencias([
-				edad : 12,
-				nombre : juan
-			])
-			
-			registrar objeto llamado hijo3 de la clase Persona.class con las dependencias([
-				edad : 15,
-				nombre : mina
-				])
 			
 			registrar objeto llamado personita de la clase Persona.class con las dependencias([
 				nombre : papa,
 				edad : 40,
-				hijos : [hijo1,hijo2,hijo3]
+				hijos : hijos
 			])
 		}
 		
 		def persona = (Persona) contenedor.instanciaDe("personita")
+		
+		assertEquals(40,persona.getEdad())
 		assertEquals(3, persona.getHijos().size())
 		assertEquals(12, persona.getHijos().get(1).getEdad())
 		assertEquals("juan", persona.getHijos().get(1).getNombre())

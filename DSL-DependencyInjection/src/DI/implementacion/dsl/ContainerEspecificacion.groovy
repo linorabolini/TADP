@@ -18,16 +18,19 @@ class ContainerEspecificacion {
 
 }
 
-
 abstract class Especificaciones{
 	
 	static public def objeto = "nada"
 	static public def la = "nada"
 	static public def las = "nada"
+	static public def lista = "nada"
+	static public def objetos = "nada"
 	
-	
+	def ultimaClaseRegistrada
 	def idUltimoRegistrado
+	def idUltimaListaRegistrada
 	def componentesRegistrados = []
+	def listasRegistradas = []
 	def container
 	
 	def registrar(algo){
@@ -39,7 +42,17 @@ abstract class Especificaciones{
 		this
 	}
 	
+	def llamada(id){
+		idUltimaListaRegistrada = id
+		this
+	}
+	
 	def de(algo){
+		this
+	}
+	
+	def tipo (Class<?> clase){
+		ultimaClaseRegistrada = clase
 		this
 	}
 	
@@ -58,8 +71,8 @@ abstract class Especificaciones{
 		name
 	}
 	
-	def componenteYaRegistrado(valor){
-		componentesRegistrados.any { id -> id.equals(valor)}
+	def componenteYaRegistrado(lista,valor){
+		lista.any { id -> id.equals(valor)}
 	}
 	
 	def esLista(valor){
@@ -67,7 +80,73 @@ abstract class Especificaciones{
 	}
 	
 	def esListaDeDependenciasConfiguradas(lista){
-		lista.any {valor -> componenteYaRegistrado(valor) }
+		lista.any {valor -> componenteYaRegistrado(componentesRegistrados,valor) }
+	}
+	
+	def especificaciones(listaDependencias){
+		
+		listasRegistradas.add(idUltimaListaRegistrada)
+		listaDependencias.each { dependencia ->
+			
+			def index = listaDependencias.indexOf(dependencia)
+			idUltimoRegistrado = idUltimaListaRegistrada + index.toString()
+			componentesRegistrados.add(idUltimoRegistrado)
+			container.registrarComponente(idUltimoRegistrado,ultimaClaseRegistrada)
+			this.dependencias(dependencia)
+		}
+		
+		container
+	}
+	
+	abstract def dependenciaValor(dependencia)
+	
+	abstract def agregarDependenciaListaConfigurada(dependencia)
+	
+	abstract def agregarDependenciaLista(dependencia)
+	
+	abstract def agregarDependenciaConfigurada(dependencia)
+	
+	abstract def agregarDependencia(dependencia)
+	
+	def dependencias(listaDependencias){
+		listaDependencias.each { dependencia ->
+			
+			if (componenteYaRegistrado(listasRegistradas,dependenciaValor(dependencia))){
+				
+				try{
+					dependencia.value = componentesRegistrados.findAll { it.startsWith(dependenciaValor(dependencia))}
+				}
+				catch (ReadOnlyPropertyException e){
+					dependencia = componentesRegistrados.findAll { it.startsWith(dependenciaValor(dependencia))}
+					if(dependencia.get(0).equals("hijos1"))
+						throw new Exception()
+				}
+				agregarDependenciaListaConfigurada(dependencia)
+			}
+			else{
+				
+				if (esLista(dependenciaValor(dependencia))){
+					
+					if (esListaDeDependenciasConfiguradas(dependenciaValor(dependencia))){
+						agregarDependenciaListaConfigurada(dependencia)
+						
+					}
+					else{
+						agregarDependenciaLista(dependencia)
+					}
+					
+				}
+				else{
+				
+					if (componenteYaRegistrado(componentesRegistrados, dependenciaValor(dependencia)))
+						agregarDependenciaConfigurada(dependencia)
+					else
+						agregarDependencia(dependencia)
+				}
+			}
+		}
+		
+		container
 	}
 		
 }
@@ -78,58 +157,58 @@ class ConstructorEspecificacion extends Especificaciones{
 		container = new ConstructorContainer()
 	}
 	
-
-	def dependencias(Object... listaDependencias){
-		listaDependencias.each { dependencia ->
-			
-			if (esLista(dependencia)){
-				
-				if (esListaDeDependenciasConfiguradas(dependencia)){
-					container.agregarDependenciaListaConfigurada(idUltimoRegistrado,dependencia.value.class,dependencia.value as String[])
-				}
-				else{
-					container.agregarDependenciaLista(idUltimoRegistrado,dependencia.value.class,dependencia.value as Object[])
-				}
-				
-			}
-			else{
-			
-				if (componenteYaRegistrado(dependencia))
-					container.agregarDependenciaConfigurada(idUltimoRegistrado,dependencia)
-				else
-					container.agregarDependencia(idUltimoRegistrado,dependencia)
-			}
-		}
-		
-		container
+	@Override
+	def dependenciaValor(dependencia){
+		dependencia
+	}
+	
+	@Override
+	def agregarDependenciaListaConfigurada(dependencia){
+		container.agregarDependenciaListaConfigurada(idUltimoRegistrado,dependencia.class,dependencia as String[])
+	}
+	
+	@Override
+	def agregarDependenciaLista(dependencia){
+		container.agregarDependenciaLista(idUltimoRegistrado,dependencia.class,dependencia as Object[])
+	}
+	
+	@Override
+	def agregarDependenciaConfigurada(dependencia){
+		container.agregarDependenciaConfigurada(idUltimoRegistrado,dependencia)
+	}
+	
+	@Override
+	def agregarDependencia(dependencia){
+		container.agregarDependencia(idUltimoRegistrado,dependencia)
 	}
 }
 
 
 class AccesorsPropertiesEspecificacion extends Especificaciones{
 	
-
-	def dependencias(listaDependencias){
-		listaDependencias.each { dependencia ->
-			
-			if (esLista(dependencia.value) ){
-				if (esListaDeDependenciasConfiguradas(dependencia.value)){					
-					container.agregarDependenciaListaConfigurada(idUltimoRegistrado,dependencia.key,dependencia.value.class,dependencia.value as String[])
-				}
-				else{
-					container.agregarDependenciaLista(idUltimoRegistrado,dependencia.key,dependencia.value.class,dependencia.value as Object[])
-				}
-			}
-			else{
-			
-				if (componenteYaRegistrado(dependencia.value))
-					container.agregarDependenciaConfigurada(idUltimoRegistrado,dependencia.key,dependencia.value)
-				else
-					container.agregarDependencia(idUltimoRegistrado,dependencia.key,dependencia.value)
-			}
-		}
-		
-		container
+	@Override
+	def dependenciaValor(dependencia){
+		dependencia.value
+	}
+	
+	@Override
+	def agregarDependenciaListaConfigurada(dependencia){
+		container.agregarDependenciaListaConfigurada(idUltimoRegistrado,dependencia.key,dependencia.value.class,dependencia.value as String[])
+	}
+	
+	@Override
+	def agregarDependenciaLista(dependencia){
+		container.agregarDependenciaLista(idUltimoRegistrado,dependencia.key,dependencia.value.class,dependencia.value as Object[])
+	}
+	
+	@Override
+	def agregarDependenciaConfigurada(dependencia){
+		container.agregarDependenciaConfigurada(idUltimoRegistrado,dependencia.key,dependencia.value)
+	}
+	
+	@Override
+	def agregarDependencia(dependencia){
+		container.agregarDependencia(idUltimoRegistrado,dependencia.key,dependencia.value)
 	}
 }
 
