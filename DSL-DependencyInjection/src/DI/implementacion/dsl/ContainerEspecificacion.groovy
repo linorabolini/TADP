@@ -103,8 +103,6 @@ abstract class Especificaciones{
 				}
 				catch (ReadOnlyPropertyException e){
 					dependencia = componentesRegistrados.findAll { it.startsWith(dependenciaValor(dependencia))}
-					if(dependencia.get(0).equals("hijos1"))
-						throw new Exception()
 				}
 				agregarDependenciaListaConfigurada(dependencia)
 			}
