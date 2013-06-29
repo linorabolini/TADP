@@ -19,23 +19,13 @@ class ContainerEspecificacion {
 }
 
 abstract class Especificaciones{
-	
-	static public def objeto = "nada"
-	static public def la = "nada"
-	static public def las = "nada"
-	static public def lista = "nada"
-	static public def objetos = "nada"
-	
+		
 	def ultimaClaseRegistrada
 	def idUltimoRegistrado
 	def idUltimaListaRegistrada
 	def componentesRegistrados = []
 	def listasRegistradas = []
 	def container
-	
-	def registrar(algo){
-		this
-	}
 	
 	def llamado(id){
 		idUltimoRegistrado = id
@@ -46,11 +36,7 @@ abstract class Especificaciones{
 		idUltimaListaRegistrada = id
 		this
 	}
-	
-	def de(algo){
-		this
-	}
-	
+
 	def tipo (Class<?> clase){
 		ultimaClaseRegistrada = clase
 		this
@@ -62,13 +48,12 @@ abstract class Especificaciones{
 		this
 	}
 	
-	def con(algo){
-		this
-	}
-	
-	
 	def propertyMissing (String name){
 		name
+	}
+	
+	def methodMissing(String name, args) {
+		this
 	}
 	
 	def componenteYaRegistrado(lista,valor){
