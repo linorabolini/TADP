@@ -3,7 +3,7 @@ package DI.implementacion.dsl
 import DI.implementacion.*
 
 class ContainerEspecificacion {
-	
+		
 	static def especificacionConstructor(bloque){
 		new ConstructorEspecificacion().with bloque
 	}
@@ -16,18 +16,42 @@ class ContainerEspecificacion {
 		new AccesorsPropertiesEspecificacion(container: new PropertyContainer()).with bloque
 	}
 
+
 }
 
 abstract class Especificaciones{
-		
+	
+
 	def ultimaClaseRegistrada
 	def idUltimoRegistrado
 	def idUltimaListaRegistrada
+	def idEntornoActual = "comun"
+	def idUltimoEntorno = "comun"
 	def componentesRegistrados = []
 	def listasRegistradas = []
 	def container
 	
 	def llamado(id){
+		idUltimoRegistrado = id
+		this
+	}
+	
+	def nombre(id){
+		idUltimoRegistrado = id
+		this
+	}
+	
+	def actual(id){
+		idEntornoActual = id
+		this
+	}
+	
+	def entorno(id){
+		idUltimoEntorno = id
+		this
+	}
+	
+	def registrar(id){
 		idUltimoRegistrado = id
 		this
 	}
@@ -94,6 +118,9 @@ abstract class Especificaciones{
 	abstract def agregarDependencia(dependencia)
 	
 	def dependencias(listaDependencias){
+				
+		if(idUltimoEntorno != idEntornoActual && idUltimoEntorno != "comun") return
+		
 		listaDependencias.each { dependencia ->
 			
 			if (componenteYaRegistrado(listasRegistradas,dependenciaValor(dependencia))){

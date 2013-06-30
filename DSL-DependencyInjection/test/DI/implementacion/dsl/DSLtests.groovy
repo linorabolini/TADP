@@ -24,7 +24,7 @@ class DSLtests {
 		
 		def contenedor = especificacionConstructor {
 			
-			registrar objeto llamado autito de la clase Auto.class con las dependencias ([4,"Fiat 600"])
+			registrar el objeto con nombre autito de la clase Auto.class con las dependencias ([4,"Fiat 600"])
 			
 		}
 		
@@ -103,6 +103,7 @@ class DSLtests {
 			
 			registrar objeto llamado autito de la clase Autito.class con las dependencias ([4.5,"Fiat 600"]) //EN EL CONSTRUCTOR NO HAY NINGUN PARAMETRO DOUBLE
 			
+			//registrar autito de la clase Autito.class con las dependencias ([4.5,"Fiat 600"])
 		}
 		
 		def auto = (Auto) contenedor.instanciaDe("autito")
@@ -368,6 +369,82 @@ class DSLtests {
 		assertEquals(12, persona.getHijos().get(1).getEdad())
 		assertEquals("juan", persona.getHijos().get(1).getNombre())
 		
+	}
+	
+	@Test
+	void testConstructorContainerCamposPrimitivosConEntornoCopado() {
+		
+		def contenedor = especificacionConstructor {
+			
+			Definir entorno actual copado
+			
+			
+			entorno copado
+			
+				registrar autito de la clase Auto.class con las dependencias ([4,"Fiat 600"])
+				
+				
+			entorno noCopado
+				
+					registrar autitoNoCopado de la clase Auto.class con las dependencias ([4,"Fiat 400"])
+					
+					
+			entorno comun
+			
+				registrar autitoComun de la clase Auto.class con las dependencias ([4,"Fiat Uno"])
+			
+		}
+		
+		
+		
+		def auto = (Auto) contenedor.instanciaDe("autito")
+		assertEquals 4, auto.getRuedas()
+		assertEquals "Fiat 600", auto.getModelo()
+		
+		auto = (Auto) contenedor.instanciaDe("autitoComun")
+		assertEquals 4, auto.getRuedas()
+		assertEquals "Fiat Uno", auto.getModelo()
+		
+		auto = (Auto) contenedor.instanciaDe("autitoNoCopado")
+		assertEquals 0, auto.getRuedas()
+		assertEquals null, auto.getModelo()
+	}
+	
+	@Test
+	void testConstructorContainerCamposPrimitivosConEntornnullComun() {
+		
+		def contenedor = especificacionConstructor {
+						
+			
+			entorno copado
+			
+				registrar autito de la clase Auto.class con las dependencias ([4,"Fiat 600"])
+				
+				
+			entorno noCopado
+				
+					registrar autitoNoCopado de la clase Auto.class con las dependencias ([4,"Fiat 400"])
+					
+					
+			entorno comun
+			
+				registrar autitoComun de la clase Auto.class con las dependencias ([4,"Fiat Uno"])
+			
+		}
+		
+		
+		
+		def auto = (Auto) contenedor.instanciaDe("autito")
+		assertEquals 0, auto.getRuedas()
+		assertEquals null, auto.getModelo()
+		
+		auto = (Auto) contenedor.instanciaDe("autitoComun")
+		assertEquals 4, auto.getRuedas()
+		assertEquals "Fiat Uno", auto.getModelo()
+		
+		auto = (Auto) contenedor.instanciaDe("autitoNoCopado")
+		assertEquals 0, auto.getRuedas()
+		assertEquals null, auto.getModelo()
 	}
 	
 }
